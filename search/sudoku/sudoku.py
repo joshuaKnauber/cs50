@@ -202,7 +202,7 @@ class Solver:
                 t1 = time.time()
 
 
-class SolverBacktracing:
+class SolverBacktracking:
     def solve(self, board: Board):
         return self.backtracking(board)
 
@@ -215,17 +215,17 @@ class SolverBacktracing:
 
     def backtracking(self, board: Board):
         empty_pos = self.find_empty(board)
-        if empty_pos is None:
+        if empty_pos is None: # assignment complete
             board.print()
             return
 
-        x, y = empty_pos
-        for num in range(1, 10):
-            if board.is_valid_move(x, y, num):
-                board.move(x, y, num)
-                if self.backtracking(board):
-                    return True
-                board.move(x, y, 0)  # reset cell
+        x, y = empty_pos # select unassigned variables
+        for num in range(1, 10): # for all values in vars domain
+            if board.is_valid_move(x, y, num): # check if var meets constraints
+                board.move(x, y, num) # add var to assignment
+                if self.backtracking(board): # recursively backtrack
+                    return True # if assignment complete return true
+                board.move(x, y, 0)  # if failed, reset var
 
 
 if __name__ == "__main__":
@@ -250,5 +250,5 @@ if __name__ == "__main__":
     # frontier = StackFrontier()
     # solver.solve(sudoku, frontier)
 
-    solver = SolverBacktracing()
+    solver = SolverBacktracking()
     solver.solve(sudoku)
