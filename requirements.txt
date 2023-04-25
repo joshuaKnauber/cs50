@@ -2,3 +2,8 @@ pygame
 Pillow
 scikit-learn
 pandas
+opencv-python
+scikit-learn
+tensorflow
+matplotlib
+tensorflow_datasets
